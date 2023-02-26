@@ -22,7 +22,15 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - dockerfile: ./src/Agent/Dockerfile
+            image: ghcr.io/${{ github.repository }}
+          - dockerfile: ./src/Dockerfile.nodemo
+            image: ghcr.io/${{ github.repository }}-nodemo
+
     steps:
     - uses: actions/checkout@v3
     -
@@ -30,8 +38,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: |
-            ghcr.io/${{ github.repository }}
+          images: ${{ matrix.image }}
           tags: |
             type=ref,event=branch
             type=ref,event=pr
@@ -62,6 +69,7 @@ jobs:
         push: true
         sbom: false
         provenance: false
+        file: ${{ matrix.dockerfile }}
         platforms: ${{ env.PLATFORMS }}
         tags: ${{ steps.meta.outputs.tags }}
         build-args: |
