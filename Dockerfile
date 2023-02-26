@@ -6,7 +6,7 @@ WORKDIR /tmp
 RUN wget https://github.com/HewlettPackard/netperf/archive/netperf-${VER}.tar.gz
 RUN tar zxf netperf-${VER}.tar.gz
 WORKDIR /tmp/netperf-netperf-${VER}
-RUN ./configure
+RUN ./configure --build=aarch64-unknown-linux-gnu
 RUN make
 
 FROM alpine:3.7  
