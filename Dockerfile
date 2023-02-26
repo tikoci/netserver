@@ -1,16 +1,19 @@
 FROM alpine:3.7 as builder
-ENV VER 2.7.0
+# using an untagged 2.7.1 to fix --enable-demo
+ARG GITREF=3bc455b
+ENV VER ${GITREF}
 RUN apk update
-RUN apk add wget build-base
+RUN apk add --no-cache wget build-base autoconf automake texinfo
 WORKDIR /tmp
-RUN wget https://github.com/HewlettPackard/netperf/archive/netperf-${VER}.tar.gz
-RUN tar zxf netperf-${VER}.tar.gz
-WORKDIR /tmp/netperf-netperf-${VER}
-RUN ./configure --build=arm-unknown-linux-gnu
+RUN wget https://github.com/HewlettPackard/netperf/tarball/${VER} -O - | tar -xz
+WORKDIR /tmp/HewlettPackard-netperf-${VER}
+RUN ./autogen.sh
+RUN ./configure --enable-demo --build=arm-unknown-linux-gnu 
 RUN make
 
-FROM alpine:3.7  
-ENV VER 2.7.0
+FROM alpine:3.17  
+ARG GITREF
+ENV VER ${GITREF}
 WORKDIR /
 COPY --from=builder /tmp/netperf-netperf-${VER}/src/netserver /usr/bin/
 COPY --from=builder /tmp/netperf-netperf-${VER}/src/netperf /usr/bin/
