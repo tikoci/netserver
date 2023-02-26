@@ -26,9 +26,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - dockerfile: ./src/Agent/Dockerfile
+          - dockerfile: ./Dockerfile
             image: ghcr.io/${{ github.repository }}
-          - dockerfile: ./src/Dockerfile.nodemo
+          - dockerfile: ./Dockerfile.nodemo
             image: ghcr.io/${{ github.repository }}-nodemo
 
     steps:
