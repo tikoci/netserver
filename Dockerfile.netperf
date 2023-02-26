@@ -21,4 +21,4 @@ ENV PORT 12865
 WORKDIR /
 COPY --from=builder /tmp/HewlettPackard-netperf-${VER}/src/netserver /usr/bin/
 COPY --from=builder /tmp/HewlettPackard-netperf-${VER}/src/netperf /usr/bin/
-CMD [ "sh", "-c", "netperf", "-H", "${SERVER}" -f "${FORMAT}" -l "${DURATION}" ]
+CMD netperf -H $SERVER -f $FORMAT -l $DURATION -p $PORT

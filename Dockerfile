@@ -15,7 +15,8 @@ FROM alpine:3.17
 ARG GITREF=3bc455b
 ENV VER ${GITREF}
 ENV PORT 12865
+ENV VERBOSITY 2
 WORKDIR /
 COPY --from=builder /tmp/HewlettPackard-netperf-${VER}/src/netserver /usr/bin/
 COPY --from=builder /tmp/HewlettPackard-netperf-${VER}/src/netperf /usr/bin/
-CMD ["sh", "-c", "netserver", "-D", "-v", "1", "-p", "${PORT}"]
+CMD netserver -D -v $VERBOSITY -p $PORT
