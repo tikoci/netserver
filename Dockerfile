@@ -15,6 +15,6 @@ FROM alpine:3.17
 ARG GITREF=3bc455b
 ENV VER ${GITREF}
 WORKDIR /
-COPY --from=builder /tmp/netperf-netperf-${VER}/src/netserver /usr/bin/
-COPY --from=builder /tmp/netperf-netperf-${VER}/src/netperf /usr/bin/
+COPY --from=builder /tmp/HewlettPackard-netperf-${VER}/src/netserver /usr/bin/
+COPY --from=builder /tmp/HewlettPackard-netperf-${VER}/src/netperf /usr/bin/
 CMD ["netserver", "-D", "-v", "1"]
