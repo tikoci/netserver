@@ -12,7 +12,7 @@ RUN ./configure --enable-demo --build=arm-unknown-linux-gnu
 RUN make
 
 FROM alpine:3.17  
-ARG GITREF
+ARG GITREF=3bc455b
 ENV VER ${GITREF}
 WORKDIR /
 COPY --from=builder /tmp/netperf-netperf-${VER}/src/netserver /usr/bin/
