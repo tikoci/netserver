@@ -46,6 +46,7 @@
     :set ($containerenvs->"PORT") "12865"
     :set ($containerenvs->"DURATION") "60"
     :set ($containerenvs->"FORMAT") "m"
+    :set ($containerenvs->"INTERVAL") "10"
 
     :local containermounts [:toarray ""]
     # TODO figure out where files go...

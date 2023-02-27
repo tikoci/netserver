@@ -18,7 +18,9 @@ ENV SERVER 198.18.18.18
 ENV PORT 12865
 ENV DURATION 60
 ENV FORMAT m
+ENV INTERVAL 10
+
 WORKDIR /app
 COPY --from=builder /tmp/HewlettPackard-netperf-${VER}/src/netserver /usr/bin/
 COPY --from=builder /tmp/HewlettPackard-netperf-${VER}/src/netperf /usr/bin/
-CMD netperf -H $SERVER -f $FORMAT -l $DURATION -p $PORT | tee "netperf-out-$(date +%s).txt"
+CMD netperf -H $SERVER -f $FORMAT -l $DURATION -p $PORT -D $INTERVAL | tee "netperf-out-$(date +%s).txt"
